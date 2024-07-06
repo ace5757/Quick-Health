@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')     //ussed to create token
 const fetchuser = require('../middleware/fetchuser')    //middleware to fetch user from token
 const User = require('../Models/User')
 const { body, validationResult } = require('express-validator');
+const Exercise = require('../Models/Exercise')
 const router = express.Router()
 
 // creating a user
@@ -91,6 +92,24 @@ router.post('/getuser', fetchuser, async(req, res)=>{
         const userid = req.user.id
         const user = await User.findById(userid).select('-password')     //get user data except password
         res.send(user)
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send('Some errror occured')
+    }
+})
+
+router.post('/assesment', fetchuser, async(req, res)=>{
+    try {
+        const {assesmentType, type, alignLeftOrRight} = req.body
+        const exerCise = await Exercise.create({
+            name: assesmentType,
+            position: type,
+            direction: alignLeftOrRight,
+            user: req.user.id
+        })
+        const savedNotes = await exerCise.save()
+        res.send(savedNotes)
+        
     } catch (error) {
         console.error(error.message)
         res.status(500).send('Some errror occured')

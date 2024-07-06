@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const ExerciseSchema = new mongoose.Schema({
+    user:{
+        type: mongoose.Schema.Types.ObjectId,       //assosiate a forign key
+        ref: 'user'
+    },
     name:{
         type: String,
         required: true

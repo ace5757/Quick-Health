@@ -7,15 +7,21 @@ function Home() {
     const host = "http://localhost:3003"
     const [user, setUser] = useState("")
     const getUser = async() =>{
-        const response = await fetch(`${host}/v1/auth/getuser`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "auth-token": localStorage.getItem('token')
-            }
-          });
-          const json = await response.json()
-          setUser(json)
+        try{
+            const response = await fetch(`${host}/v1/auth/getuser`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "auth-token": localStorage.getItem('token')
+                }
+              });
+              const json = await response.json()
+              setUser(json)
+        }
+        catch(e){
+            console.log(e)
+        }
+        
     }
     useEffect(() => {
         if(localStorage.getItem('token')){

@@ -12,6 +12,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import DataState from './Context/DataState';
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -26,6 +27,7 @@ function App() {
 }
   return (
     <div className="App">
+      <DataState>
       <Router>
 
         <Navbar />
@@ -36,11 +38,12 @@ function App() {
             <Route exact path="/about" element={<About/>} />
             <Route exact path="/login" element={<Login showAlert={showAlert}/>} />
             <Route exact path="/signup" element={<Signup showAlert={showAlert}/>} />
-            <Route exact path="/positiontype" element={<PositionWindow />} />
+            <Route exact path="/positiontype" element={<PositionWindow showAlert={showAlert}/>} />
 
           </Routes>
         </div>
       </Router>
+      </DataState>
     </div>
   );
 }

@@ -1,10 +1,14 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import dataContext from '../Context/dataContext'
 
 function Card(props) {
     const navigate = useNavigate()
+    const context = useContext(dataContext)
+    const {updateData } = context
     const { bodyPartName, imageUrl } = props
     const handleClick = () => {
+        updateData(bodyPartName)
         navigate('/positiontype')
     }
     return (
